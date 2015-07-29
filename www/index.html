@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2012-2014 Adobe Systems Incorporated. All rights reserved.
+
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<html xmlns="http://www.w3.org/1999/html">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="msapplication-tap-highlight" content="no" />
+		<!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		<link rel="stylesheet" type="text/css" href="css/Swipe.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+		<script src="js/html2canvas.js"></script>
+		<script src="js/canvas2image.js"></script>
+		<script src="js/jspdf.js"></script>
+
+		<title>EmoApp</title>
+	</head>
+	<body >
+		<script type="text/javascript" src="js/index.js"></script>
+		<script type="text/javascript" src="cordova.js"></script>
+		<script src="js/hammer.js"></script>
+		<script src="js/jquery.hammer.js"></script>
+		<script src="js/jspdf.js"></script>
+		<script src="js/jspdf.plugin.standard_fonts_metrics.js"></script>
+		<script src="js/jspdf.plugin.split_text_to_size.js"></script>
+		<script src="js/jspdf.plugin.from_html.js"></script>
+		<script src="js/jspdf.plugin.addimage.js"></script>
+		<script src="js/EventosDesplegables.js"></script>
+		<script src="js/Swipe.js"></script>
+		<script src="js/Slide.js"></script>
+		<script src="js/Droppables.js"></script>
+		<script src="js/MetodosBocadillos.js"></script>
+		<script src="js/Visualizacion.js"></script>
+		<script src="js/SlideModoVisualizacion.js"></script>
+		<script src="js/MetodosCuentos.js"></script>
+		<script src="js/Login.js"></script>
+		<script src="js/Descargas.js"></script>
+		<script src="js/RecolectaElementos.js"></script>
+		<script src="js/MetodosCompartir.js"></script>
+
+		<!--<script src="http://responsivevoice.org/responsivevoice/responsivevoice.js"></script>-->
+		<script type="text/javascript">
+			app.initialize();
+
+			//Iniciamos la BDD.
+			var db = window.openDatabase("BDD", "1.0", "BDD", 1000000);
+			db.transaction(populateDB, errorCB, successCB);
+
+			function populateDB(tx) {
+				
+				tx.executeSql('CREATE TABLE IF NOT EXISTS Bocadillos '
+				 + '('
+				 + '`ID` int(11) NOT NULL,' 
+				 + '`Posx` float NOT NULL,'
+				 + '`Posy` float NOT NULL,' 
+				 + '`Zoom` int(11) NOT NULL,'
+				 + '`Angulo` int(11) NOT NULL,' 
+				 + '`ID_Paginas` int(11) NOT NULL,'
+				 + '`ID_Tipo` int(11) NOT NULL,' 
+				 + '`ID_Cuento` int(11) NOT NULL,'
+				 + 'PRIMARY KEY (`ID`,`ID_Cuento`)'
+				 + ')');
+				
+				
+				tx.executeSql('CREATE TABLE IF NOT EXISTS `Colecciones`' 
+				+ '(' 
+				+ '`ID_Colecciones` int(11) NOT NULL,' 
+				+ '`Nombre` varchar(100) NOT NULL,'
+				+ '`Fondos` int(11) NOT NULL,' 
+				+ '`Personajes` int(11) NOT NULL,' 
+				+ '`Objetos` int(11) NOT NULL, '
+				+ '`Bocadillos` int(11) NOT NULL, ' 
+				+ 'PRIMARY KEY (`ID_Colecciones`)' + ')');
+				
+				
+				
+				tx.executeSql('CREATE TABLE IF NOT EXISTS `Cuentos`' 
+				+ '(' 
+				+ '`NombreCuento` char(50),' 
+				+ '`ID_Colecciones` int(11) NOT NULL,' 
+				+ 'PRIMARY KEY (`NombreCuento`)' 
+				+ ')');
+				
+				
+				tx.executeSql('CREATE TABLE IF NOT EXISTS `Fondos`' 
+				+ ' (' 
+				+ '`ID_Cuento` int(11) NOT NULL,' 
+				+ '`ID_Paginas` int(11) NOT NULL,' 
+				+ '`Tipo_Fondo` int(11) NOT NULL,' 
+				+ 'PRIMARY KEY (`ID_Cuento`,`ID_Paginas`)' 
+				+ ')');
+				
+				
+				
+				tx.executeSql('CREATE TABLE IF NOT EXISTS `Narraciones`' 
+				+ '(' 
+				+ '`ID` int(11) NOT NULL,' 
+				+ '`Posx` int(11) NOT NULL,' 
+				+ '`Posy` int(11) NOT NULL,' 
+				+ '`Zoom` int(11) NOT NULL,' 
+				+ '`Angulo` int(11) NOT NULL,' 
+				+ '`Color_Texto` int(11) NOT NULL,' 
+				+ '`Color_Fondo` int(11) NOT NULL,' 
+				+ '`Texto` varchar(100) NOT NULL,' 
+				+ '`ID_Paginas` int(11) NOT NULL,' 
+				+ '`ID_Cuento` int(11) NOT NULL,' 
+				+ 'PRIMARY KEY (`ID`,`ID_Cuento`)' + ')');
+				
+			
+				
+				tx.executeSql('CREATE TABLE IF NOT EXISTS `Objetos`' 
+				+ '(' 
+				+ '`ID` int(11) NOT NULL,' 
+				+ '`Posx` float NOT NULL,' 
+				+ '`Posy` float NOT NULL,' 
+				+ '`Zoom` int(11) NOT NULL,' 
+				+ '`Angulo` int(11) NOT NULL,' 
+				+ '`ID_Paginas` int(11) NOT NULL,' 
+				+ '`ID_Tipo` int(11) NOT NULL,' 
+				+ '`ID_Cuento` int(11) NOT NULL,' 
+				+ 'PRIMARY KEY (`ID`,`ID_Cuento`)' 
+				+ ')');
+				
+				
+				
+				tx.executeSql('CREATE TABLE IF NOT EXISTS `Paginas`' 
+				+ '(' 
+				+ '`ID_Paginas` int(11) NOT NULL,' 
+				+ '`ID_Cuento` int(11) NOT NULL,' 
+				+ 'PRIMARY KEY (`ID_Paginas`,`ID_Cuento`)' 
+				+ ')');
+				
+				
+				tx.executeSql('CREATE TABLE IF NOT EXISTS `Personajes`' 
+				+ '(' + '`ID` int(11) NOT NULL,' 
+				+ '`Posx` float NOT NULL,' 
+				+ '`Posy` float NOT NULL,' 
+				+ '`Zoom` int(11) NOT NULL,' 
+				+ '`Angulo` int(11) NOT NULL,' 
+				+ '`ID_Paginas` int(11) NOT NULL,' 
+				+ '`ID_Tipo` int(11) NOT NULL,' 
+				+ '`ID_Cuento` int(11) NOT NULL,' 
+				+ 'PRIMARY KEY (`ID`,`ID_Cuento`)' 
+				+ ')');
+				
+				
+				tx.executeSql('CREATE TABLE IF NOT EXISTS `TipoFondo`' 
+				+ '(' 
+				+ '`IDTipo_Fondos` int(11) NOT NULL,' 
+				+ '`URL` varchar(500) NOT NULL,' 
+				+ '`ID_Colecciones` int(11) NOT NULL,' 
+				+ 'PRIMARY KEY (`IDTipo_Fondos`,`ID_Colecciones`)' 
+				+ ')');
+				
+				
+				tx.executeSql('CREATE TABLE IF NOT EXISTS `TipoObjetos`' 
+				+ '(' 
+				+ '`IDTipo_Objetos` int(11) NOT NULL,' 
+				+ '`URL` varchar(500) NOT NULL,' 
+				+ '`ID_Colecciones` int(11) NOT NULL,' 
+				+ 'PRIMARY KEY (`IDTipo_Objetos`,`ID_Colecciones`)' 
+				+ ')');
+				
+				
+				tx.executeSql('CREATE TABLE IF NOT EXISTS `TipoPersonajes`' 
+				+ '('
+				+ '`IDTipo_Personajes` int(11) NOT NULL,' 
+				+ '`URL` int(11) NOT NULL,'
+				+ '`ID_Colecciones` int(11) NOT NULL,' 
+				+ 'PRIMARY KEY (`IDTipo_Personajes`,`ID_Colecciones`)'
+				+ ')');
+				
+				
+				tx.executeSql('CREATE TABLE IF NOT EXISTS `TipoBocadillo`' 
+				+ '(' 
+				+ '`IDTipo_Bocadillos` int(11) NOT NULL,' 
+				+ '`URL` int(11) NOT NULL,' 
+				+ '`ID_Colecciones` int(11) NOT NULL,' 
+				+ 'PRIMARY KEY (`IDTipo_Bocadillos`,`ID_Colecciones`)' 
+				+ ')');
+
+			}
+
+			// Transaction error callback
+			//
+			function errorCB(tx, err) {
+				alert("Error al crear BDD processing SQL Inicial: " + err);
+			}
+
+			// Transaction success callback
+			//
+			function successCB() {
+				  //alert("success_hecho inicial!");
+
+			}
+
+			CargarColletIDs();
+			//CargarCuentos();
+
+			var CuentoActual;
+			var Cuentos = [];
+			var Paginas = [];
+
+			CargarCuento(localStorage.getItem("ID_CuentoUltimo"));
+
+		</script>
+
+		<div id="Login" data-role="page">
+
+			<div data-role="header">
+				<h1>Wellcome to Emoapp</h1>
+			</div><!-- /header -->
+
+			<div data-role="content" class="Content">
+				<form id="formulario" >
+
+					<div id="Comprobacion"></div>
+
+					<label class="titulo"> User </label>
+					<input  type="text" id="usuario">
+
+					<label class="titulo"> Password </label>
+					<input type="password" id="clave" >
+
+					<a data-role="button" onclick="ComprobacionLogin()">Sign in</a>
+					<a data-role="button" href="#Registro">Sign up</a>
+
+				</form>
+			</div><!-- /content -->
+
+			<div data-role="footer" data-position="fixed">
+				<h4></h4>
+			</div><!-- /footer -->
+
+		</div><!-- /page -->
+
+		<div id="Registro" data-role="page">
+
+			<div data-role="header">
+				<h1>Sign Up</h1>
+			</div><!-- /header -->
+
+			<div data-role="content" class="Content">
+				<form id="formulario" >
+
+					<label class="titulo"> User </label>
+					<input  type="text" id="usuarior">
+
+					<label class="titulo"> Password </label>
+					<input type="password" id="claver" >
+
+					<label class="titulo"> E-mail </label>
+					<input type="email" id="correo" >
+
+					<label class="titulo"> Name </label>
+					<input type="text" id="nombre" >
+
+					<label class="titulo"> Surname </label>
+					<input type="text" id="apellido" >
+
+					<a data-role="button" onclick="Registro()">Sign up</a>
+					<a data-role="button" href="#Login">Cancel</a>
+
+				</form>
+			</div><!-- /content -->
+
+			<div data-role="footer" data-position="fixed">
+				<h4></h4>
+			</div><!-- /footer -->
+
+		</div><!-- /page -->
+
+		<div data-role="page" id="Emoapp">
+			<div id="headeremoapp" data-role="header" class="ui-bar" style="background-image: url(img/IconosDesplegables/60x60/cabecera.png)">
+				<a id="BotonAmpliarMenu" style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png); top:10%" class="ui-btn-right" data-role="button" data-iconpos="notext" data-icon="bars" onclick="MostrarMenu()"></a>
+				<h1 id="TituloHeader"><img src="img/IconosDesplegables/60x60/Titulo.png" /></h1>
+				<a id="BotonCambiarModo" style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png); top:10%"  class="ui-btn-right" data-role="button" data-iconpos="notext" data-icon="check" onclick="VisualizacionOff()"></a>
+
+		
+			</div>
+			<div id="PrimerCuadrante"  class="ui-grid-d PrimerCuadranteModoEdicion">
+				<div class="ui-block-a">
+					<a href="#popupSelecionarCuento" data-rel="popup" data-role="button" onclick="PoupCuentos()" style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png); width: 80%"> <img src="img/IconosDesplegables/60x60/Cuento.png" width="60" height="60"> </a>
+				</div>
+				<div class="ui-block-b BarraPrincipal hidden">
+					<a data-rel="popup" data-role="button"  onclick="getidElementos('','Narracion','tipo_0')" style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png); width: 80%""> <img src="img/IconosDesplegables/60x60/Texto.png" width="60" height="60"> </a>
+					</div>
+
+					<div class="ui-block-c BarraPrincipal  hidden">
+					<a href="#popupSelecionarFondos" data-rel="popup" data-role="button" style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png); width: 80%""> <img src="img/IconosDesplegables/60x60/Fondo.png" width="60" height="60"> </a>
+				</div>
+
+				<div class="ui-block-d BarraPrincipal  hidden">
+					<a href="#popupSelecionarPersonajes" data-rel="popup" data-role="button" style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png); width: 80%""> <img src="img/IconosDesplegables/60x60/Personaje.png" width="60" height="60"> </a>
+					</div>
+					<div class="ui-block-e BarraPrincipal  hidden">
+					<a href="#popupSelecionarObjetos" data-rel="popup" data-role="button" style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png); width: 80%""> <img src="img/IconosDesplegables/60x60/Objeto.png" width="60" height="60"> </a>
+				</div>
+			</div>
+
+			<div id="SegundoCuadrante"  class="ui-grid-b SegundoCuadranteModoEdicion">
+
+				<div id="IconoBocadillo" class="ui-block-a BarraPrincipal  hidden">
+					<a href="#popupSelecionarBocadillos" data-rel="popup" data-role="button" style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png); width: 80%""> <img src="img/IconosDesplegables/60x60/bocadillo.png" width="60" height="60" onclick="DesplegarBocadillos()"> </a>
+					</div>
+
+					<div id="Papelera" class="ui-block-b">
+					<a data-role="button" style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png); width: 80%""> <IMG src="img/IconosDesplegables/60x60/Papelera.png" width="60" height="60"> </a>
+				</div>
+
+				<div class="ui-block-c">
+					<a data-role="button" onclick="Compartir()" style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png); width: 80%"> <img src="img/IconosDesplegables/60x60/Compartir.png" width="60" height="60"> </a>
+				</div>
+			</div>
+
+			<!-- Parte del slide de las hojas del cuento. -->
+			<div  id="TabsCuento" class="PantallaCuento MEdicion" onclick="OcultarDesplegables()">
+				<a id="BotonIzquierdatab" style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png)" data-role="button" data-iconpos="notext"  data-icon="arrow-l" onclick="slideder()"></a>
+				<a id="BotonDerechatab" style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png)" data-role="button" data-iconpos="notext"  data-icon="arrow-r" onclick="slideizq()" ></a>
+
+				<!--
+				<div id="pag_0" class="PaginaCuento actual">
+				</div>
+				-->
+
+			</div>
+
+			<div id="BarraSlide" data-role="footer" class="ui-bar"  data-position="fixed" onclick="OcultarDesplegables()" style="background-image: url(img/IconosDesplegables/60x60/cabecera.png)">
+					 <center>
+					 <a id="BotonIzquierda" style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png)" data-role="button" data-iconpos="notext"  data-icon="arrow-l" onclick="slideder()"></a>
+					 <a id="Botonadd" style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png)" data-role="button" data-iconpos="notext" data-icon="plus" onclick="addPage()"></a>
+ 					 <a id="BotonVista" style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png)" data-role="button" data-iconpos="notext"  data-icon="eye" onclick="VisualizacionOn()" ></a>
+					 <a id="BotonEliminar" style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png)" href="#popupDialog" data-rel="popup" data-role="button" data-iconpos="notext"  data-icon="delete"></a> 
+					 <a id="BotonDerecha" style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png)" data-role="button" data-iconpos="notext"  data-icon="arrow-r" onclick="slideizq()" ></a>
+					 </center>  
+			</div>
+
+			<!--Poup Cuentos-->
+			<div data-role="popup" id="popupSelecionarCuento" data-overlay-theme="a" data-theme="c" class="ui-corner-all ui-popup ui-body-c ui-overlay-shadow" aria-disabled="false" data-disabled="false" data-shadow="true" data-corners="true" data-transition="none" data-position-to="window">
+				<div id="Cuentos">
+					<div data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-a" role="banner" style="background-image: url(img/IconosDesplegables/60x60/cabecera.png)" >
+						<h1 class="ui-title" role="heading" aria-level="1">Cuentos</h1>
+						<a id="BotonaddCuento" style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png)" data-rel="popup" class="ui-btn-right" data-role="button" data-iconpos="notext" data-mini="true" data-icon="plus" onclick="PopupCrearCuento()"></a>
+						<a id="BotonaddCuento" style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png)" data-rel="popup" class="ui-btn-left" data-role="button" data-iconpos="notext" data-mini="true" data-icon="minus" onclick="PopupEliminarCuento()"></a>
+					</div>
+					<div id="ContentPopup" data-role="content" data-theme="d" class="ui-corner-bottom ui-content ui-body-d" role="main">
+
+					</div>
+				</div>
+
+				<div id="CrearCuento">
+					<div data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-a" role="banner" style="background-image: url(img/IconosDesplegables/60x60/cabecera.png)" >
+						<h1 class="ui-title" role="heading" aria-level="1">Crear Cuento</h1>
+					</div>
+					<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content ui-body-d" role="main">
+						<h3 class="ui-title">Introduce el nombre del cuento.</h3>
+						<input type="text" id="InputNombre">
+						<h3 class="ui-title">Selecciona la Coleccion que quieres en tu cuento.</h3>
+						<select id="SelectorColecciones" class = "Select" data-native-menu="false"></select>
+						<a href="#" data-role="button" style="background-image: url(img/IconosDesplegables/60x60/cabecera.png)" data-inline="true" data-rel="back" data-theme="c" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-inline ui-btn-up-c"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Cancelar</span></span></a>
+						<a href="#" data-role="button" style="background-image: url(img/IconosDesplegables/60x60/cabecera.png)" data-inline="true" onclick="CrearCuento()" data-rel="back" data-transition="flow" data-theme="b" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-inline ui-btn-up-b" ><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Crear</span></span></a>
+					</div>
+				</div>
+
+				<div id="EliminarCuento">
+					<div data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-a" role="banner" style="background-image: url(img/IconosDesplegables/60x60/cabecera.png)" >
+						<h1 class="ui-title" role="heading" aria-level="1">Eliminar Cuentos</h1>
+					</div>
+					<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content ui-body-d" role="main">
+						<h3 class="ui-title">Seleccione los cuentos que quiere borrar.</h3>
+						<select id="SelectEliminarCuento" multiple="multiple" data-native-menu="false" tabindex="-1"></select>
+						<a href="#" style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png)" data-role="button" data-inline="true" data-rel="back" data-theme="c" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-inline ui-btn-up-c"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Cancelar</span></span></a>
+						<a href="#" style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png)" data-role="button" data-inline="true" onclick="EliminarCuentos()" data-rel="back" data-transition="flow" data-theme="b" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-inline ui-btn-up-b" ><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Eliminar</span></span></a>
+					</div>
+				</div>
+			</div>
+
+			<!-- Poup Añadir Objetos -->
+			<div data-role="popup" id="popupSelecionarObjetos" data-overlay-theme="a" data-theme="c" class="ui-corner-all ui-popup ui-body-c ui-overlay-shadow" aria-disabled="false" data-disabled="false" data-shadow="true" data-corners="true" data-transition="none" data-position-to="window">
+				<div id="Objetos">
+					<div data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-a" role="banner" style="background-image: url(img/IconosDesplegables/60x60/cabecera.png)" >
+						<h1 class="ui-title" role="heading" aria-level="1">Objetos</h1>
+					</div>
+					<div id="ContentPopupobj" data-role="content" data-theme="d" class="ui-corner-bottom ui-content ui-body-d" role="main">
+
+					</div>
+				</div>
+			</div>
+
+			<!--Popup Añadir Personaje-->
+			<br />
+			<div data-role="popup" id="popupSelecionarPersonajes" data-overlay-theme="a" data-theme="c" class="ui-corner-all ui-popup ui-body-c ui-overlay-shadow" aria-disabled="false" data-disabled="false" data-shadow="true" data-corners="true" data-transition="none" data-position-to="window">
+				<div id="Personajes">
+					<div data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-a" role="banner" style="background-image: url(img/IconosDesplegables/60x60/cabecera.png)" >
+						<h1 class="ui-title" role="heading" aria-level="1">Personajes</h1>
+					</div>
+					<div id="ContentPopuppj" data-role="content" data-theme="d" class="ui-corner-bottom ui-content ui-body-d" role="main">
+
+					</div>
+				</div>
+			</div>
+
+			<!--Popup Añadir Bocadillos-->
+			<br />
+			<div data-role="popup" id="popupSelecionarBocadillos" data-overlay-theme="a" data-theme="c" class="ui-corner-all ui-popup ui-body-c ui-overlay-shadow" aria-disabled="false" data-disabled="false" data-shadow="true" data-corners="true" data-transition="none" data-position-to="window">
+				<div id="Bocadillos">
+					<div data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-a" role="banner" style="background-image: url(img/IconosDesplegables/60x60/cabecera.png)" >
+						<h1 class="ui-title" role="heading" aria-level="1">Bocadillos</h1>
+					</div>
+					<div id="ContentPopupBoca" data-role="content" data-theme="d" class="ui-corner-bottom ui-content ui-body-d" role="main">
+
+					</div>
+				</div>
+			</div>
+
+			<!-- Popup Añadir Fondo-->
+			<br />
+			<div data-role="popup" id="popupSelecionarFondos" data-overlay-theme="a" data-theme="c" class="ui-corner-all ui-popup ui-body-c ui-overlay-shadow" aria-disabled="false" data-disabled="false" data-shadow="true" data-corners="true" data-transition="none" data-position-to="window">
+				<div id="Fondos">
+					<div data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-a" role="banner" style="background-image: url(img/IconosDesplegables/60x60/cabecera.png)" >
+						<h1 class="ui-title" role="heading" aria-level="1">Bocadillos</h1>
+					</div>
+					<div id="ContentPopupFondo" data-role="content" data-theme="d" class="ui-corner-bottom ui-content ui-body-d" role="main">
+
+					</div>
+				</div>
+			</div>
+
+			<!--Popup Añadir texto -->
+			<div data-role="popup" id="popupTexto" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all ui-popup ui-body-c ui-overlay-shadow" aria-disabled="false" data-disabled="false" data-shadow="true" data-corners="true" data-transition="none" data-position-to="window">
+				<div data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-a" role="banner" style="background-image: url(img/IconosDesplegables/60x60/cabecera.png)">
+					<h1 class="ui-title" role="heading" aria-level="1">Edición Texto</h1>
+				</div>
+				<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content ui-body-d" role="main">
+					<input id="Texto" type="text">
+					<br>
+					<a style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png)" data-role="button" data-iconpos="notext" data-rel="back" data-icon="delete" role="button" data-inline="true"></a>
+					<a style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png)" data-role="button" data-iconpos="notext" data-rel="back" data-icon="check" onclick="addText()" role="button" data-inline="true"></a>
+
+				</div>
+			</div>
+
+			<!-- Popup Borrar Página -->
+			<div data-role="popup" id="popupDialog" data-overlay-theme="a" data-theme="c" style="max-width:400px;" class="ui-corner-all ui-popup ui-body-c ui-overlay-shadow" aria-disabled="false" data-disabled="false" data-shadow="true" data-corners="true" data-transition="none" data-position-to="window">
+				<div data-role="header" data-theme="a" class="ui-corner-top ui-header ui-bar-a" role="banner" style="background-image: url(img/IconosDesplegables/60x60/cabecera.png)">
+					<h1 class="ui-title" role="heading" aria-level="1">¿Eliminar Página?</h1>
+				</div>
+				<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content ui-body-d" role="main">
+					<h3 class="ui-title">¿Etás seguro que quieres eliminar esta página?</h3>
+					<p>
+						Esta Acción no puede deshacerse.
+					</p>
+					<a style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png)" href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-inline ui-btn-up-c" ><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Cancelar</span></span></a>
+					<a style="background-image: url(img/IconosDesplegables/60x60/fondoboton.png)" href="#" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-inline ui-btn-up-b" onclick="removePage()"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Borrar</span></span></a>
+				</div>
+			</div>
+		</div>
+
+		<div id="deviceready" class="blink" hidden="true">
+			<p class="event listening">
+				Connecting to Device
+			</p>
+			<p class="event received">
+				Device is Ready
+			</p>
+		</div>
+
+	</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Slider Responsive</title>
+</head>
+<style>
+    body{margin: 0; padding: 0; -webkit-box-sizing: border-box;}
+    .form_container{
+        width: 100%;
+        position: relative;
+        margin: 0 auto;
+        overflow: hidden;
+    }
+    .left, .right{
+        position: absolute;
+        cursor: pointer;
+        top: 45%;
+        transform: translateY(-45%);
+        width: 0px;
+        height: 0px;
+        margin: 5px;
+        opacity: 0.4;
+        transition: all .5s ease-in;
+        -webkit-transition: all .5s ease-in;
+    }
+    .left{
+        left: 0px;
+        border-top: 20px solid transparent;
+        border-bottom: 20px solid transparent;
+        border-right: 27px solid #ccc;
+    }
+    .right{
+        right: 0px;
+        border-top: 20px solid transparent;
+        border-bottom: 20px solid transparent;
+        border-left: 27px solid #ccc;
+    }
+    .left:hover, .right:hover{
+        opacity: 1;
+    }
+    .form_container .slideContainer{
+        white-space: nowrap;
+    }
+    .form_container .slideContainer .slide{
+        display: inline-block;
+        margin-right: -4px;
+        vertical-align: top;
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background-position: 20%;
+    }
+</style>
+<body>
+<div class="form_container">
+    <div class="slideContainer">
+        <div class="slide" data-color="#A3D1B5">
+        </div>
+        <div class="slide" data-color="#A3D135">
+        </div>
+        <div class="slide" data-color="#A3A1B5">
+        </div>
+        <div class="slide" data-color="A4A1B5">
+        </div>
+    </div>
+    <div class="left"></div>
+    <div class="right"></div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script type="text/javascript">
+    var indicador = 0;
+    $(document).on('ready', function(){
+        $('.left').on('click', function(e){
+            e.preventDefault();
+            moveSlider('left');
+        });
+        $('.right').on('click', function(e){
+            e.preventDefault();
+            moveSlider('right');
+        });
+        function auto(){
+            intv = setInterval(function(){
+                $('.right').click();
+            }, 3000);
+        }
+        auto(); // start
+        $('.form_container').hover(function( e ){
+            return e.type=='mouseenter'?clearInterval(intv):auto();
+        });
+        defineSizes();
+    });
+
+    $(window).on('resize', defineSizes);
+    function defineSizes(){
+        $('.form_container .slide').each(function(i, el) {
+            $(el).css({
+                'background-image': 'url('+$(el).data('background')+')',
+                'height': ($('.form_container').width() * 0.42)+'px',
+                'width' : ($('.form_container').width())+'px'
+            });
+        });
+        $('.form_container .slideContainer').css({
+            'margin-left': -(indicador * $('.form_container').width())+'px'
+        })
+    }
+    function moveSlider(direccion){
+        var limite = $('.form_container .slide').length;
+        indicador = (direccion == 'right') ? indicador + 1 : indicador - 1;
+        indicador = (indicador >= limite) ? 0 : indicador;
+        indicador = (indicador < 0) ? limite - 1 : indicador;
+        $('.form_container .slideContainer').animate({
+            'margin-left': -(indicador * $('.form_container').width())+'px'
+        })
+    }
+</script>
+</body>
+</html>

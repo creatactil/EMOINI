@@ -1,0 +1,66 @@
+
+@font-face {
+    font-family: "Imitation";
+    src: url("IMIT.TTF");
+
+}
+#zoom {
+
+
+}
+
+#zoom2 {
+
+    left:100px;
+
+}
+
+#zoom3 {
+
+    left:200px;
+
+}
+#zoom4{
+    top: 200px;
+    left:300px;
+
+}
+
+#pelota{
+    top: 200px;
+    left:300px;
+
+}
+
+#zoom5 {
+    top: 200px;
+    left:400px;
+
+}
+
+.zoomProps{
+   position:fixed;
+    /*
+    height: 240px;
+    width: 150px;
+    */
+
+}
+
+#zoomwrapper {
+    height: 60px;
+    width: 60px;
+    overflow: hidden;
+
+
+}
+
+.polaroid{
+    text-align: center;
+
+}
+body{
+    background-repeat: no-repeat;
+    background-size:100%;
+
+}

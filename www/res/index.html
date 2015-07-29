@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2014 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link rel="stylesheet" type="text/css" href="css/Swipe.css" />
+    <title>EmoApp</title>
+</head>
+<body onload="wellcome()">
+<script type="text/javascript" src="js/index.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="js/interact.min.js"></script>
+<script type="text/javascript" src="js/Swipe.js"></script>
+<script type="text/javascript" src="js/EventosDesplegables.js"></script>
+<script type="text/javascript" src="cordova.js"></script>
+<script src="http://responsivevoice.org/responsivevoice/responsivevoice.js"></script>
+<script type="text/javascript">
+    app.initialize();
+    function wellcome(){
+        /*
+         var textesp = "Bienvenido a EmoApp";
+         var texten = "Wellcome to EmoApp"
+         var textde = "Willkommen bei emoapp"
+         responsiveVoice.speak(textesp,'Spanish Female');
+         responsiveVoice.speak(texten,'UK English Female');
+         responsiveVoice.speak(texten,'Deutsch Female');
+         */
+    }
+</script>
+
+
+<div id="PrimerCuadrante"  class="ui-grid-d">
+    <div class="ui-block-a">
+        <input type=image src="img/IconosDesplegables/60x60/Cuento.png" width="60" height="60" onclick="DesplegarCuentos()">
+    </div>
+    <div class="ui-block-b BarraPrincipal hidden">
+        <input type=image src="img/IconosDesplegables/60x60/Collect.png" width="60" height="60" onclick="DesplegarCollects()">
+    </div>
+
+    <div class="ui-block-c BarraPrincipal  hidden">
+        <input type=image src="img/IconosDesplegables/60x60/Fondo.png" width="60" height="60" onclick="DesplegarFondos()">
+    </div>
+    <div class="ui-block-d BarraPrincipal  hidden">
+        <input type=image src="img/IconosDesplegables/60x60/objetos.png" width="60" height="60" onclick="DesplegarObjetos()">
+    </div>
+    <div class="ui-block-e BarraPrincipal  hidden">
+        <input type=image src="img/IconosDesplegables/60x60/bocadillo.png" width="60" height="60" onclick="DesplegarBocadillos()">
+    </div>
+
+</div>
+
+<div id="PrimerCuadranteBajo" class="ui-grid-d">
+    <div class="ui-block-a hidden">
+        <input type=image src="img/IconosDesplegables/60x60/Cuento.png" width="60" height="60">
+    </div>
+
+    <div class="ui-block-b hidden">
+        <input type=image src="img/IconosDesplegables/60x60/Collect.png" width="60" height="60">
+    </div>
+
+    <div class="ui-block-c hidden">
+        <input type=image src="img/IconosDesplegables/60x60/Fondo.png" width="60" height="60">
+    </div>
+
+    <div class="ui-block-d hidden">
+        <input type=image src="img/IconosDesplegables/60x60/objetos.png" width="60" height="60">
+    </div>
+
+    <div class="ui-block-e hidden">
+        <input type=image src="img/IconosDesplegables/60x60/bocadillo.png" width="60" height="60">
+    </div>
+
+    <div class="ui-block-a hidden">
+        <input type=image src="img/IconosDesplegables/60x60/Cuento.png" width="60" height="60" onclick="SeleccionLibro()">
+    </div>
+
+
+    <div class="ui-block-b hidden">
+        <input type=image src="img/IconosDesplegables/60x60/Collect.png" width="60" height="60">
+    </div>
+</div>
+
+<div id="SegundoCuadrante"  class="ui-grid-a">
+
+    <div class="ui-block-a">
+        <input type=image src="img/IconosDesplegables/60x60/Papelera.png" width="60" height="60">
+    </div>
+
+    <div class="ui-block-b">
+        <input type=image src="img/IconosDesplegables/60x60/Compartir.png" width="60" height="60">
+    </div>
+</div>
+
+<!--
+<iframe class="PantallaCuento">
+<div data-role="page" data-dialog="true" id="Titulo" class="PaginaCuento">
+    <div data-role="content" >
+
+    </div>
+   <!-- <div id="zoomwrapper">
+        <div id="zoom" class="zoomProps">
+            <div class="polaroid">
+                <IMG SRC="img/IconosDesplegables/3.png">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-role="page" data-dialog="true"id="Pag1" class="PaginaCuento">
+    <div data-role="content"  class="PantallaCuento">
+
+    </div>
+    <!-- <div id="zoomwrapper">
+         <div id="zoom" class="zoomProps">
+             <div class="polaroid">
+                 <IMG SRC="img/IconosDesplegables/3.png">
+             </div>
+         </div>
+     </div>
+</div>
+
+<div data-role="page" id="page1" data-url="page1" tabindex="0" class="ui-page ui-page-theme-a ui-page-active" style="min-height: 198px;">
+    <div data-role="header" role="banner" class="ui-header ui-bar-inherit">
+        <h1 class="ui-title" role="heading" aria-level="1">Page 1</h1>
+    </div>
+    <div role="main" class="ui-content">
+        <a href="#page2" data-transition="slide" class="ui-btn ui-corner-all ui-btn-inline">Go To Page 2</a>
+    </div>
+</div>
+
+<div data-role="page" data-dialog="true" id="Pag2">
+    <div data-role="content"  class="PantallaCuento">
+
+    </div>
+    <!-- <div id="zoomwrapper">
+         <div id="zoom" class="zoomProps">
+             <div class="polaroid">
+                 <IMG SRC="img/IconosDesplegables/3.png">
+             </div>
+         </div>
+     </div>
+</div>
+
+</iframe>
+-->
+
+
+<div data-role="tabs" class="PantallaCuento">
+    <ul data-role="listview" data-inset="true" id="MenuLateral">
+        <li><a href="#one" data-ajax="false"  data-transition="pop">one</a></li>
+        <li><a href="#two" data-ajax="false"  data-transition="pop">two</a></li>
+        <li><a href="ajax-content.html" data-ajax="false">three</a></li>
+    </ul>
+    <div id="one" class="PaginaCuento">
+        <IMG class="draggable" SRC="img/IconosDesplegables/3.png">
+    </div>
+    <div id="two" class="PaginaCuento">
+        <h1>second tab contents</h1>
+    </div>
+</div>
+
+
+<!--
+<ul data-role="listview" data-inset="true" id="MenuLateral" data-icon="false" data-iconpos="none">
+    <li><a href="#Titulo" data-ajax="false">Título</a></li>
+    <li><a href="#Pag1" data-ajax="false">Página 1</a></li>
+    <li><a href="#Pag2" data-ajax="false">Página 2</a></li>
+</ul>
+-->
+</body>
+</html>

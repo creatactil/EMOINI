@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link rel="stylesheet" type="text/css" href="css/Swipe.css" />
+    <title>EmoApp</title>
+</head>
+<body>
+<script type="text/javascript" src="js/index.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="js/interact.min.js"></script>
+<script type="text/javascript" src="js/Swipe.js"></script>
+<script type="text/javascript" src="js/EventosDesplegables.js"></script>
+<script type="text/javascript" src="cordova.js"></script>
+<script src="js/hammer.js"></script>
+<script src="js/jquery.hammer.js"></script>
+<script src="js/Slide.js"></script>
+<script src="http://responsivevoice.org/responsivevoice/responsivevoice.js"></script>
+
+<div id="zoom5" class="zoomProps">
+    <div class="polaroid">
+        <IMG SRC="img/IconosDesplegables/3.png">
+    </div>
+</div>
+
+<script>
+    var hammertime = new Hammer($("#zomm5"));
+    hammertime.on('pan', function(ev) {
+        console.log(ev);
+    });
+
+    hammertime.get('pinch').set({ enable: true });
+    hammertime.get('rotate').set({ enable: true });
+    hammertime.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+    hammertime.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
+</script>
+
+</body>
+</html>
